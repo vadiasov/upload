@@ -40,6 +40,10 @@
                               id="my-awesome-dropzone" style="margin: 10px">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                             <input type="hidden" name="path" value="{!! $path !!}">
+                            <input type="hidden" name="table" value="{!! $table !!}">
+                            <input type="hidden" name="column" value="{!! $column !!}">
+                            <input type="hidden" name="id_item" value="{!! $id_item !!}">
+                            <input type="hidden" name="albumId" value="{!! $albumId !!}">
                         </form>
                         <!-- /.box-body -->
                         <div class="box-footer">

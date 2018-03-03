@@ -5,6 +5,7 @@ namespace Vadiasov\Upload\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class UploadController extends Controller
@@ -20,6 +21,9 @@ class UploadController extends Controller
         $acceptedFiles = $config['rules']['acceptedFiles'];
         $maxFilesize   = $config['rules']['maxFilesize'];
         $backUrl       = $config['backUrl'];
+        $table         = $config['db_table'];
+        $column        = $config['column'];
+        $id_item       = $config['id_item'];
         
         return view('upload::upload', compact(
             'active',
@@ -28,13 +32,21 @@ class UploadController extends Controller
             'url',
             'acceptedFiles',
             'maxFilesize',
-            'backUrl'
+            'backUrl',
+            'table',
+            'column',
+            'id_item',
+            'albumId'
         ));
     }
     
     public function store(Request $request)
     {
-        $path = $request->path;
+        $path    = $request->path;
+        $table   = $request->table;
+        $column  = $request->column;
+        $id_item = $request->id_item;
+        $albumId = $request->albumId;
         Log::debug('store. 1.');
         Log::debug($_FILES);
         $ds = DIRECTORY_SEPARATOR;  //1
@@ -50,13 +62,19 @@ class UploadController extends Controller
 
 //            $targetPath = dirname(__FILE__) . $ds . $storeFolder . $ds;  //4
 
-//            $targetFile = $targetPath . $_FILES['file']['name'];  //5
-            $targetFile = $storeFolder . $_FILES['file']['name'];  //5
+//            $targetFile = $storeFolder . $_FILES['file']['name'];  //5
+            $path         = $_FILES['file']['name'];
+            $ext          = pathinfo($path, PATHINFO_EXTENSION);
+            $randomString = $this->generateRandomString(3);
+            $fileName = date('Y-m-d_h-i-s--') . $randomString . ('.') . $ext;
+            $targetFile   = $storeFolder . $fileName;
+//            $targetFile = $storeFolder . $_FILES['file']['name'];  //5
             Log::debug($targetFile);
             
             move_uploaded_file($tempFile, $targetFile); //6
 //            $targetFile->store('tracks');
 //            $file->store('tracks');
+            $result= $this->saveInDb($table, $column, $id_item, $albumId, $fileName);
         }
 
 //            $tmp_name = $_FILES["file"]["tmp_name"][0];
@@ -67,6 +85,29 @@ class UploadController extends Controller
 //            move_uploaded_file($tmp_name, $storeFolder . "/1.png");
 //        $file = $_FILES['file'][0];
 //        $file->store('tracks');
+        
+    }
+    
+    private function generateRandomString($length = 10)
+    {
+        $characters       = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString     = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        
+        return $randomString;
+    }
+    
+    private function saveInDb($table, $column, $id_item, $id, $fileName)
+    {
+        DB::table($table)->insert([
+            [
+                $id_item => $id,
+                $column => $fileName
+            ]
+        ]);
         
     }
     

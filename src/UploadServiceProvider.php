@@ -5,6 +5,13 @@ namespace Vadiasov\Upload;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
 
+/**
+ * Class UploadServiceProvider
+ *
+ * @todo    publish/install dropzone.css, dropzone.js
+ *
+ * @package Vadiasov\Upload
+ */
 class UploadServiceProvider extends ServiceProvider
 {
     /**
@@ -20,7 +27,7 @@ class UploadServiceProvider extends ServiceProvider
 //        $this->loadMigrationsFrom(__DIR__ . '/Migrations');
 //        $this->loadTranslationsFrom(__DIR__ . '/Translations', 'upload');
         $this->loadViewsFrom(__DIR__ . '/Views', 'upload');
-        
+
 //        $this->publishes([__DIR__ . '/Config/upload.php' => config_path('upload.php'),], 'upload_config');
 //        $this->publishes([__DIR__ . '/Assets' => public_path('vendor/upload'),], 'upload_assets');
 //        $this->publishes(
@@ -28,7 +35,7 @@ class UploadServiceProvider extends ServiceProvider
 //                __DIR__ . '/Translations' => resource_path('lang/vendor/upload'),
 //                __DIR__ . '/Views'        => resource_path('views/vendor/upload'),
 //            ]);
-        
+
 //        if ($this->app->runningInConsole()) {
 //            $this->commands([
 //                \Vadiasov\Upload\Commands\UploadCommand::class,

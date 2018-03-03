@@ -1,6 +1,6 @@
 {
     "name": "vadiasov/upload",
-    "description": "Laravel package to multi upload files with 'drug and drop', used dropzone.js",
+    "description": "Laravel package to multi upload files with 'drug and drop' using dropzone.js",
     "license": "MIT",
     "type": "library",
     "require": {
