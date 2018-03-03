@@ -1,0 +1,26 @@
+{
+    "name": "vadiasov/upload",
+    "description": "Laravel package to multi upload files with 'drug and drop', used dropzone.js",
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": ">=7.0",
+        "illuminate/support": "5.*"
+    },
+    "author": {
+        "name": "Volodymyr Vadiasov ",
+        "email": "vadiasov.volodymyr@gmail.com"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vadiasov\\Upload\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vadiasov\\Upload\\UploadServiceProvider"
+            ]
+        }
+    }
+}
