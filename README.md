@@ -56,6 +56,7 @@ composer update
 ...
 Vadiasov\Upload\UploadServiceProvider::class,
 ````
+4. Publish Assets. dropzone.js and dropzone.css will be copied from the package to public/js and css directories accordingly. 
 4. Edit config file that you will use in outer controller to start upload (for example: config/upload-admin.php):
 ````
     'rules'    => [

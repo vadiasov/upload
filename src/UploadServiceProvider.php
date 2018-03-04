@@ -29,7 +29,7 @@ class UploadServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/Views', 'upload');
 
 //        $this->publishes([__DIR__ . '/Config/upload.php' => config_path('upload.php'),], 'upload_config');
-//        $this->publishes([__DIR__ . '/Assets' => public_path('vendor/upload'),], 'upload_assets');
+        $this->publishes([__DIR__ . '/Assets' => public_path(),], 'upload_assets');
 //        $this->publishes(
 //            [
 //                __DIR__ . '/Translations' => resource_path('lang/vendor/upload'),
