@@ -69,6 +69,9 @@ Vadiasov\Upload\UploadServiceProvider::class,
     'id_item'  => 'album_id',
     'column'   => 'file',
     'backUrl'  => 'admin/albums',
+    'header'             => 'Add tracks to the album ',
+    'parent_table'       => 'albums',
+    'parent_column_name' => 'title',
 ];
 ````
 * where url - package route of package controller function that process files
@@ -79,6 +82,10 @@ Vadiasov\Upload\UploadServiceProvider::class,
 * column - table column name that keep file names of uploaded files
 * id_item - table column name that you can use to bind uploaded file to. For example, "album_id" of album that has this file (track).
 * backUrl - route name for a button "Back" under the form of uploading (you uploaded all files and click it to come back to somewhere).
+* header - String that may be inserted in the Upload form header (with title of an album).
+* parent_table - DB table name of parent packages. For example may be used to get a title of album.
+* parent_column_name - DB table column name of parent packages. For example may be used to get a title of album.
+ 
 
 ## Using
 Open page with route
