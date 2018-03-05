@@ -13,17 +13,24 @@ class UploadController extends Controller
     public function upload($config, $albumId)
     {
         Log::debug('Upload. 1.');
-        $active        = 'upload';
-        $user          = Auth::user();
-        $config        = config($config);
-        $path          = $config['path'];
-        $url           = $config['rules']['url'];
-        $acceptedFiles = $config['rules']['acceptedFiles'];
-        $maxFilesize   = $config['rules']['maxFilesize'];
-        $backUrl       = $config['backUrl'];
-        $table         = $config['db_table'];
-        $column        = $config['column'];
-        $id_item       = $config['id_item'];
+        $active             = 'upload';
+        $user               = Auth::user();
+        $config             = config($config);
+        $path               = $config['path'];
+        $url                = $config['rules']['url'];
+        $acceptedFiles      = $config['rules']['acceptedFiles'];
+        $maxFilesize        = $config['rules']['maxFilesize'];
+        $backUrl            = $config['backUrl'];
+        $table              = $config['db_table'];
+        $id_item            = $config['id_item'];
+        $column             = $config['column'];
+        $header             = $config['header'];
+        $parent_table       = $config['parent_table'];
+        $parent_column_name = $config['parent_column_name'];
+        $title = DB::table($parent_table)
+            ->whereId($albumId)
+            ->first()
+            ->title;
         
         return view('upload::upload', compact(
             'active',
@@ -36,7 +43,9 @@ class UploadController extends Controller
             'table',
             'column',
             'id_item',
-            'albumId'
+            'albumId',
+            'header',
+            'title'
         ));
     }
     
@@ -66,7 +75,7 @@ class UploadController extends Controller
             $path         = $_FILES['file']['name'];
             $ext          = pathinfo($path, PATHINFO_EXTENSION);
             $randomString = $this->generateRandomString(3);
-            $fileName = date('Y-m-d_h-i-s--') . $randomString . ('.') . $ext;
+            $fileName     = date('Y-m-d_h-i-s--') . $randomString . ('.') . $ext;
             $targetFile   = $storeFolder . $fileName;
 //            $targetFile = $storeFolder . $_FILES['file']['name'];  //5
             Log::debug($targetFile);
@@ -74,7 +83,7 @@ class UploadController extends Controller
             move_uploaded_file($tempFile, $targetFile); //6
 //            $targetFile->store('tracks');
 //            $file->store('tracks');
-            $result= $this->saveInDb($table, $column, $id_item, $albumId, $fileName);
+            $result = $this->saveInDb($table, $column, $id_item, $albumId, $fileName);
         }
 
 //            $tmp_name = $_FILES["file"]["tmp_name"][0];
@@ -105,8 +114,8 @@ class UploadController extends Controller
         DB::table($table)->insert([
             [
                 $id_item => $id,
-                $column => $fileName
-            ]
+                $column  => $fileName,
+            ],
         ]);
         
     }

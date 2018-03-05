@@ -32,7 +32,8 @@
                 <div class="col-md-6">
                     <div class="box box-info">
                         <div class="box-header with-border" style="margin-bottom: 10px">
-                            <h3 class="box-title">Add Tracks</h3>
+                            <h3 class="box-title">{{ $header . ': '}} <span
+                                        style="color: #00c0ef">{{ $title }}</span></h3>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->

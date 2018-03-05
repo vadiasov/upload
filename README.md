@@ -43,12 +43,12 @@ When you have decided about subdirectory:
       ...  
     },
 ````
-2. Run in your terminal:
+2.Run in your terminal:
 ````
 cd your_application_root
 composer update
 ````
-3. This package is developed with discovery feature. So it must itself to create row in a config/app.com about ServiceProvider:
+3.This package is developed with discovery feature. So it must itself to create row in a config/app.com about ServiceProvider:
 ````
 /*
  * Package Service Providers...
@@ -56,8 +56,8 @@ composer update
 ...
 Vadiasov\Upload\UploadServiceProvider::class,
 ````
-4. Publish Assets. dropzone.js and dropzone.css will be copied from the package to public/js and css directories accordingly. 
-4. Edit config file that you will use in outer controller to start upload (for example: config/upload-admin.php):
+4.Publish Assets. dropzone.js and dropzone.css will be copied from the package to public/js and css directories accordingly. 
+5.Edit config file that you will use in outer controller to start upload (for example: config/upload-admin.php):
 ````
     'rules'    => [
         'url'           => '/tracks-store',
