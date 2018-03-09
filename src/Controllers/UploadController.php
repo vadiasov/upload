@@ -21,13 +21,14 @@ class UploadController extends Controller
         $acceptedFiles      = $config['rules']['acceptedFiles'];
         $maxFilesize        = $config['rules']['maxFilesize'];
         $backUrl            = $config['backUrl'];
+//        $backUrl            = $this->processUrl($backUrl, $albumId);
         $table              = $config['db_table'];
         $id_item            = $config['id_item'];
         $column             = $config['column'];
         $header             = $config['header'];
         $parent_table       = $config['parent_table'];
         $parent_column_name = $config['parent_column_name'];
-        $title = DB::table($parent_table)
+        $title              = DB::table($parent_table)
             ->whereId($albumId)
             ->first()
             ->title;
@@ -118,6 +119,21 @@ class UploadController extends Controller
             ],
         ]);
         
+    }
+    
+    private function processUrl($url, $albumId)
+    {
+        $array = explode('{', $url);
+        
+        if (count($array > 1)) {
+            $array2 = explode('}', $array[1]);
+        } else {
+            return $url;
+        }
+        
+        $result = implode('', [$array[0], $albumId, $array2[1]]);
+        
+        return $result;
     }
     
 }

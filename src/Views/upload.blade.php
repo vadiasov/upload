@@ -48,7 +48,7 @@
                         </form>
                         <!-- /.box-body -->
                         <div class="box-footer">
-                            <a href="{{ route($backUrl) }}" class="btn btn-default">Back</a>
+                            <a href="{{ action($backUrl, $albumId) }}" class="btn btn-default">Back</a>
                         </div>
                         <!-- /.box-footer -->
                     </div>
