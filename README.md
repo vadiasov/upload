@@ -58,20 +58,49 @@ Vadiasov\Upload\UploadServiceProvider::class,
 ````
 4.Publish Assets. dropzone.js and dropzone.css will be copied from the package to public/js and css directories accordingly. 
 5.Edit config file that you will use in outer controller to start upload (for example: config/upload-admin.php):
+5.1.For a single parent:
 ````
-    'rules'    => [
-        'url'           => '/tracks-store',
-        'acceptedFiles' => 'image/*,audio/*',
-        'maxFilesize'   => '96000000',
+return [
+    'rules'              => [
+        'url'           => '/arts-store',
+        'acceptedFiles' => 'image/*',
+        'maxFilesize'   => '250000',
     ],
-    'path'     => '/app/public/tracks/',
-    'db_table' => 'tracks',
-    'id_item'  => 'album_id',
-    'column'   => 'file',
-    'backUrl'  => 'admin/albums',
-    'header'             => 'Add tracks to the album ',
+    'path'               => '/app/public/arts/',
+    'db_table'           => 'arts',
+    'id_item'            => 'album_id',
+    'id_item_2'          => '',
+    'column'             => 'file',
+    'backUrl'            => '\Vadiasov\ArtsAdmin\Controllers\ArtsController@index',
+    'pageHeader'         => 'Arts',
+    'header'             => 'Add arts to the album ',
     'parent_table'       => 'albums',
     'parent_column_name' => 'title',
+    'view'               => 'upload_3',
+];
+````
+5.1.For a two-parents case:
+````
+return [
+    'rules'                  => [
+        'url'           => '/items-store',
+        'acceptedFiles' => 'image/*',
+        'maxFilesize'   => '250000',
+    ],
+    'path'                   => '/app/public/arts/',
+    'db_table'               => 'arts',
+    'id_item'                => 'album_id',
+    'id_item_2'              => 'track_id',
+    'column'                 => 'file',
+    'backUrl'                => '\Vadiasov\ArtsAdmin\Controllers\ArtsController@indexTrack',
+    'pageHeader'             => 'Arts',
+    'header'                 => 'Add arts to the track ',
+    'header_second_part'     => ' of the album ',
+    'parent_db_table'        => 'albums',
+    'sub_parent_db_table'    => 'tracks',
+    'parent_column_name'     => 'title',
+    'sub_parent_column_name' => 'title',
+    'view'                   => 'upload_4',
 ];
 ````
 * where url - package route of package controller function that process files
@@ -88,14 +117,22 @@ Vadiasov\Upload\UploadServiceProvider::class,
  
 
 ## Using
-Open page with route
+Open page with route for a single parent:
 ````
 '/tracks-upload/{config}/{id}'
+````
+Open page with route for a two-parents case:
+````
+'/tracks-upload/{config}/{first_parent_id}/{second_parent_id}'
 ````
 to open upload form.
 Where 
 * config - name of config file (see p.4 - upload-admin)
 * id - parameter that you can use (for examle: id of album that has to include uploading tracks).
 
+Example:
+* first parent - Album
+* second parent - tracks
+we upload arts for a specific track of an album. 
 
 
